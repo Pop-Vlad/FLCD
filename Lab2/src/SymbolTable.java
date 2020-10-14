@@ -15,7 +15,7 @@ public class SymbolTable {
 
     public Pair<Integer, Integer> pos(String token){
         Pair<Integer, Integer> result = this.search(token);
-        if(result.getSecond() == 0){
+        if(result.getSecond() == -1){
             return  this.add(token);
         }
         else {
@@ -25,7 +25,7 @@ public class SymbolTable {
 
     public String getTokenFromPos(Pair<Integer, Integer> pos){
         Node current = table[pos.getFirst()];
-        for(int i=0; i<=pos.getSecond(); i++){
+        for(int i=0; i<pos.getSecond(); i++){
             current = current.next;
         }
         return current.token;
@@ -33,11 +33,17 @@ public class SymbolTable {
 
     private Pair<Integer, Integer> search(String token){
         int index1 = this.hash(token) % this.size;
+        if(table[index1] == null) {
+            return new Pair<>(index1, -1);
+        }
         int index2 = 0;
         Node current = table[index1];
         while(current != null && !current.token.equals(token)){
             current = current.next;
             index2 ++;
+        }
+        if(current == null){
+            return new Pair<>(index1, -1);
         }
         return new Pair<>(index1, index2);
     }
