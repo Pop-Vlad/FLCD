@@ -1,0 +1,4 @@
+
+:= + - * / % < > <= >= =
+space { } ; ( ) \n \t [ ]
+int char if else while read write

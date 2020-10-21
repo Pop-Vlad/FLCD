@@ -1,0 +1,15 @@
+int x;
+read(x);
+
+int d;
+d := 2;
+char ok;
+ok := "f";
+
+while(d * d <= x){
+	if (x % d == 0) {
+		ok := "t";
+	}
+	d := d + 1;
+}
+write(ok);

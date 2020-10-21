@@ -1,0 +1,14 @@
+//        if (!Character.isLetterOrDigit(program.charAt(pos))) {
+//            token.append(program.charAt(pos));
+//            pos++;
+//            if(program.charAt(pos) < program.length() && program.charAt(pos) == '='){
+//                token.append(program.charAt(pos));
+//                pos++;
+//            }
+//            return new Pair<>(token.toString(), pos);
+//        }
+//        while (Character.isLetterOrDigit(program.charAt(pos))) {
+//            token.append(program.charAt(pos));
+//            pos++;
+//        }
+//
