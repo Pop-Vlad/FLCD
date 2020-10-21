@@ -114,8 +114,8 @@ public class Scanner {
 
     private boolean isIdentifierOrConstant(String token) {
         return token.matches("[a-zA-Z][a-zA-Z0-9]{0,100}")
-                || token.matches("[0-9]{0,8}") //TODO
-                || token.matches("\".\"");  //TODO
+                || token.matches("[1-9][0-9]{0,8}")
+                || token.matches("\"[a-zA-Z0-9]\"");
     }
 
     private List<String> readTokensFromFile() throws IOException {
