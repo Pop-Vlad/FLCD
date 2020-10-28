@@ -1,8 +1,4 @@
 The symbol table is represented using a hash table
 The contents of the symbol table are:
-48: 0 
-97: a 
-105: i 
-110: n 
-115: s 
-598: 20 
+120: x 
+121: y 

@@ -13,11 +13,11 @@ public class ProgramInternalForm {
         pairs.add(elem);
     }
 
-    public Pair<String, Integer> get(int index){
+    public Pair<String, Integer> get(int index) {
         return pairs.get(index);
     }
 
-    public int size(){
+    public int size() {
         return pairs.size();
     }
 

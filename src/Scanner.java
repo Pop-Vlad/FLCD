@@ -99,10 +99,10 @@ public class Scanner {
         if (!aux) {
             pos++;
         }
-        if(token.toString().equals("+") || token.toString().equals("-")){
-            if(pif.get(pif.size() - 1).getFirst().equals(":=")){
+        if (token.toString().equals("+") || token.toString().equals("-")) {
+            if (pif.get(pif.size() - 1).getFirst().equals(":=")) {
                 Pair<String, Integer> nextToken = detect(program, pos);
-                return new Pair<>(token+nextToken.getFirst(), nextToken.getSecond());
+                return new Pair<>(token + nextToken.getFirst(), nextToken.getSecond());
             }
         }
         return new Pair<>(token.toString(), pos);
@@ -131,7 +131,7 @@ public class Scanner {
     }
 
     private boolean isConstant(String token) {
-        return token.matches("[-+]?[1-9][0-9]{0,8}")  || token.matches("0")
+        return token.matches("[-+]?[1-9][0-9]{0,8}") || token.matches("0")
                 || token.matches("\"[a-zA-Z0-9]\"");
     }
 
