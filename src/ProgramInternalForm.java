@@ -13,6 +13,14 @@ public class ProgramInternalForm {
         pairs.add(elem);
     }
 
+    public Pair<String, Integer> get(int index){
+        return pairs.get(index);
+    }
+
+    public int size(){
+        return pairs.size();
+    }
+
     @Override
     public String toString() {
         return "PIF:" + pairs.stream()

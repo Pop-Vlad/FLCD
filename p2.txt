@@ -2,7 +2,7 @@ int x;
 read(x);
 
 int d;
-d := 2;
+d := +2;
 char ok;
 ok := "f";
 

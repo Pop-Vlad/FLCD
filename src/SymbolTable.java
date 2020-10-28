@@ -1,15 +1,13 @@
 public class SymbolTable {
 
     private final Node[] table;
-    private final int size;
+    private final int size = 1000;
 
     public SymbolTable(){
-        this.size = 1000;
         this.table = new Node[this.size];
     }
 
     public SymbolTable(int size) {
-        this.size = size;
         this.table = new Node[this.size];
     }
 
@@ -19,13 +17,13 @@ public class SymbolTable {
             return  this.add(token);
         }
         else {
-            return result.getFirst() + result.getSecond() * 1000;
+            return result.getFirst() + result.getSecond() * this.size;
         }
     }
 
     public String getTokenFromPos(int pos){
-        int index1 = pos % 1000;
-        int index2 = pos / 1000;
+        int index1 = pos % this.size;
+        int index2 = pos / this.size;
         Node current = table[index1];
         for(int i=0; i<index2; i++){
             current = current.next;
@@ -66,7 +64,7 @@ public class SymbolTable {
             }
             current.next = newNode;
             newNode.previous = current;
-            return pos * 1000 + index;
+            return pos * this.size + index;
         }
 
     }
@@ -94,8 +92,11 @@ public class SymbolTable {
         sb.append("The symbol table is represented using a hash table\n");
         sb.append("The contents of the symbol table are:\n");
         for(int i=0; i<table.length; i++){
-            sb.append(i).append(": ");
             Node current = table[i];
+            if(current == null){
+                continue;
+            }
+            sb.append(i).append(": ");
             while(current != null){
                 sb.append(current.token).append(" ");
                 current = current.next;

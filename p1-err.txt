@@ -1,6 +1,5 @@
 int 12x;
 int y;
-char "wew";
 
 read(x);
 read(y);

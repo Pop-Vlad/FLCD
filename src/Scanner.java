@@ -28,7 +28,7 @@ public class Scanner {
     }
 
     public void scan() {
-        boolean ok  =true;
+        boolean ok = true;
         try {
             tokens = readTokensFromFile();
             String program = Files.readString(Path.of(programFile));
@@ -45,7 +45,11 @@ public class Scanner {
                             pif.add(new Pair<>(token, -1));
                         } else if (isIdentifierOrConstant(token)) {
                             int index = st.pos(token);
-                            pif.add(new Pair<>(token, index));
+                            if (isIdentifier(token)) {
+                                pif.add(new Pair<>("0", index));
+                            } else {
+                                pif.add(new Pair<>("1", index));
+                            }
                         } else {
                             System.out.println("lexical error at line " + currentLine + ": " + token);
                             ok = false;
@@ -55,7 +59,7 @@ public class Scanner {
                 } catch (Exception e) {
                     System.out.println("lexical error at line " + currentLine + ": " + program.charAt(i));
                     i++;
-                    ok  =false;
+                    ok = false;
                     //return;
                 }
             }
@@ -65,7 +69,7 @@ public class Scanner {
             BufferedWriter stFile = new BufferedWriter(new FileWriter(new File("ST.out")));
             stFile.write(st.toString());
             stFile.close();
-            if(ok){
+            if (ok) {
                 System.out.println("lexically correct");
             }
         } catch (IOException e) {
@@ -95,6 +99,12 @@ public class Scanner {
         if (!aux) {
             pos++;
         }
+        if(token.toString().equals("+") || token.toString().equals("-")){
+            if(pif.get(pif.size() - 1).getFirst().equals(":=")){
+                Pair<String, Integer> nextToken = detect(program, pos);
+                return new Pair<>(token+nextToken.getFirst(), nextToken.getSecond());
+            }
+        }
         return new Pair<>(token.toString(), pos);
     }
 
@@ -113,8 +123,15 @@ public class Scanner {
     }
 
     private boolean isIdentifierOrConstant(String token) {
-        return token.matches("[a-zA-Z][a-zA-Z0-9]{0,100}")
-                || token.matches("[1-9][0-9]{0,8}")
+        return isIdentifier(token) || isConstant(token);
+    }
+
+    private boolean isIdentifier(String token) {
+        return token.matches("[a-zA-Z][a-zA-Z0-9]{0,100}");
+    }
+
+    private boolean isConstant(String token) {
+        return token.matches("[-+]?[1-9][0-9]{0,8}")  || token.matches("0")
                 || token.matches("\"[a-zA-Z0-9]\"");
     }
 

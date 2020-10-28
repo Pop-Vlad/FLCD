@@ -1,6 +1,6 @@
 public class Main {
 
-    private static final String program = "p1-err.txt";
+    private static final String program = "p3.txt";
     private static final String tokens = "token.in";
 
     public static void main(String[] args) {

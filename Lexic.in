@@ -1,0 +1,40 @@
+
+Alphabet:
+
+	Uppercase and lowercase characters of the english alphabet (A-Z and a-z)
+	Decimal digits (0-9)
+	Special characters: ( ) { } [ ] ; = : - + * / % " space \n \t
+
+Special symbols:
+
+	operators:
+		:= + - * / % == != < > <= >=
+
+	separators:
+		space { } ; ( ) \n \t [ ]
+
+	reserved words:
+		int char if while read write
+
+
+Identifiers:
+
+	A sequence of letters and digits that starts with a letter.
+	IDENTIFIER = LETTER ({LETTER | DIGIT})
+	LETTER = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+	DIGIT = "0" | "1" | ... | "9"
+
+Constants:
+
+	integer:
+
+		A sequence of digits that does not start with the digit "0" and may have the symbol "+" or "-" before it.
+		INT = "0" | [ "+" | "-" ] NON_ZERO_DIGIT {DIGIT}
+		DIGIT = "0" | "1" | ... "9"
+		NON_ZERO_DIGIT = "1" | "2" | ... "9"
+	
+	character:
+		
+		CHARACTER = "LETTER" | "DIGIT"
+		LETTER = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+		DIGIT = "0" | "1" | ... | "9"

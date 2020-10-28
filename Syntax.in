@@ -1,0 +1,28 @@
+
+program ::= stmt_list
+
+stmt_list ::= stmt | stmt ";" | stmt ";" stmt_list
+stmt ::= simple_stmt | struct_stmt
+
+simple_stmt ::= assign_stmt | decl_stmt | io_stmt
+
+assign_stmt ::= identifier ":=" expression | array_elem ":=" expression
+expression ::= expression "+" term| expression "-" term | term
+term ::= term "*" factor | term "/" factor | factor
+factor ::= arithmetic_operand | "(" expression ")"
+arithmetic_operand ::= identifier | constant | array_elem
+
+decl_stmt ::= type identifier
+type ::= simple_type | comp_type
+simple_type ::= "int" | "char"
+comp_type ::= simple_type "[]"
+io_stmt ::= "read(" read_operand ")" | "write(" write_operand ")"
+
+read_operand ::= identifier | array_elem
+write_operand ::= identifier | array_elem | constant
+
+struct_stmt ::= "{" stmt_list "}" | if_stmt | while_stmt
+if_stmt ::= "if" condition stmt | "if" condition stmt "else" stmt
+while_stmt ::= "while" condition "{" stmt "}"
+condition ::= expression relation expression
+relation ::= "==" | "<" | ">" | "<=" | ">=" | "!="
