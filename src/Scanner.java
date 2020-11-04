@@ -16,6 +16,7 @@ public class Scanner {
     private final ProgramInternalForm pif;
     private List<String> tokens;
     private int currentLine;
+    private FiniteAutomaton fa;
 
 
     public Scanner(String programFile, String tokensFile) {
@@ -25,6 +26,11 @@ public class Scanner {
         this.currentLine = 1;
         st = new SymbolTable();
         pif = new ProgramInternalForm();
+        try {
+            this.fa = new FiniteAutomaton("FA-identifier-or-constant.in");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void scan() {
@@ -79,7 +85,7 @@ public class Scanner {
     }
 
     private Pair<String, Integer> detect(String program, Integer pos) throws Exception {
-        if (!String.valueOf(program.charAt(pos)).matches("[_a-zA-Z0-9{};():=*/%<>!\\-\\[\\]\"\\+\\s]")) {
+        if (!String.valueOf(program.charAt(pos)).matches("[a-zA-Z0-9{};():=*/%<>!\\-\\[\\]\"\\+\\s]")) {
             throw new Exception(String.valueOf(program.charAt(pos)));
         }
         StringBuilder token = new StringBuilder();
@@ -105,13 +111,22 @@ public class Scanner {
                 return new Pair<>(token + nextToken.getFirst(), nextToken.getSecond());
             }
         }
+        if (token.toString().equals("\"")) {
+            token.append(program.charAt(pos));
+            pos++;
+            token.append(program.charAt(pos));
+            pos++;
+            if(fa.isAccepted(token.toString())){
+                return new Pair<>(token.toString(), pos);
+            }
+            else {
+                return new Pair<>("", pos);
+            }
+        }
         return new Pair<>(token.toString(), pos);
     }
 
     private boolean canBeToken(String toCheck) {
-        if (toCheck.matches("[_a-zA-Z0-9\"]{0,100}")) {
-            return true;
-        }
         boolean ok = false;
         for (String s : tokens) {
             if (s.startsWith(toCheck)) {
@@ -119,11 +134,16 @@ public class Scanner {
                 break;
             }
         }
-        return ok;
+        return ok || isIdentifierOrConstant(toCheck);
     }
 
     private boolean isIdentifierOrConstant(String token) {
-        return isIdentifier(token) || isConstant(token);
+        try {
+            return fa.isAccepted(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private boolean isIdentifier(String token) {

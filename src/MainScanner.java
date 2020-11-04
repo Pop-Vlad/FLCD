@@ -1,6 +1,6 @@
-public class Main {
+public class MainScanner {
 
-    private static final String program = "p1.txt";
+    private static final String program = "p2.txt";
     private static final String tokens = "token.in";
 
     public static void main(String[] args) {
