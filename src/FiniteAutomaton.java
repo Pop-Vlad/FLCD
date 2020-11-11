@@ -99,6 +99,28 @@ public class FiniteAutomaton {
         return finalStates.contains(currentState);
     }
 
+    public boolean mayBecomeAccepted(String sequence) throws Exception {
+        if (!isDeterministic()) {
+            throw new Exception("FA is not deterministic");
+        }
+        String currentState = initialState;
+        while (!sequence.isEmpty()) {
+            List<Pair<String, String>> trans = transitions.get(currentState);
+            String firstChar = String.valueOf(sequence.charAt(0));
+            Optional<String> nextState = trans.stream()
+                    .filter(p -> p.getFirst().equals(firstChar))
+                    .map(Pair::getSecond)
+                    .findFirst();
+            if (nextState.isEmpty()) {
+                return false;
+            } else {
+                currentState = nextState.get();
+            }
+            sequence = sequence.substring(1);
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return "FA{" +
