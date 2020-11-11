@@ -18,7 +18,6 @@ public class Scanner {
     private int currentLine;
     private FiniteAutomaton fa;
 
-
     public Scanner(String programFile, String tokensFile) {
         this.programFile = programFile;
         this.tokensFile = tokensFile;
@@ -96,20 +95,20 @@ public class Scanner {
             }
             return new Pair<>(token.toString(), pos);
         }
-//        if (program.charAt(pos) == '"') {
-//            token.append(program.charAt(pos));
-//            pos++;
-//            token.append(program.charAt(pos));
-//            pos++;
-//            token.append(program.charAt(pos));
-//            pos++;
-//            if(fa.isAccepted(token.toString())){
-//                return new Pair<>(token.toString(), pos);
-//            }
-//            else {
-//                return new Pair<>("", pos);
-//            }
-//        }
+        if (program.charAt(pos) == '"') {
+            token.append(program.charAt(pos));
+            pos++;
+            token.append(program.charAt(pos));
+            pos++;
+            token.append(program.charAt(pos));
+            pos++;
+            if(fa.isAccepted(token.toString())){
+                return new Pair<>(token.toString(), pos);
+            }
+            else {
+                return new Pair<>("", pos);
+            }
+        }
         boolean aux = false;
         while (pos < program.length() && canBeToken(token.toString() + program.charAt(pos))) {
             aux = true;
@@ -119,12 +118,12 @@ public class Scanner {
         if (!aux) {
             pos++;
         }
-//        if (token.toString().equals("+") || token.toString().equals("-")) {
-//            if (pif.get(pif.size() - 1).getFirst().equals(":=")) {
-//                Pair<String, Integer> nextToken = detect(program, pos);
-//                return new Pair<>(token + nextToken.getFirst(), nextToken.getSecond());
-//            }
-//        }
+        if (token.toString().equals("+") || token.toString().equals("-")) {
+            if (pif.get(pif.size() - 1).getFirst().equals(":=")) {
+                Pair<String, Integer> nextToken = detect(program, pos);
+                return new Pair<>(token + nextToken.getFirst(), nextToken.getSecond());
+            }
+        }
         return new Pair<>(token.toString(), pos);
     }
 
@@ -136,12 +135,7 @@ public class Scanner {
                 break;
             }
         }
-        try {
-            return ok || fa.mayBecomeAccepted(toCheck);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return ok || toCheck.matches("[a-zA-Z0-9]{0,100}");
     }
 
     private boolean isIdentifierOrConstant(String token) {
